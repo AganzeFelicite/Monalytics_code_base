@@ -85,16 +85,30 @@ WSGI_APPLICATION = 'monalytics.wsgi.application'
 #     }
 # }
 
+import dj_database_url
+
+# Database URL
+DATABASE_URL = config('DATABASE_URL', default=False)
+
+# Parse database configuration from $DATABASE_URL
+db_from_env = dj_database_url.config(default=DATABASE_URL)
+
+# Update database settings
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default=False),
-        'USER': config('DB_USER', default=False),
-        'PASSWORD': config('DB_PASSWORD', default=False),
-        'HOST': config('DB_HOST', default=False),
-        'PORT': config('DB_PORT', default=False),
-    }
+    'default': db_from_env
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME', default=False),
+#         'USER': config('DB_USER', default=False),
+#         'PASSWORD': config('DB_PASSWORD', default=False),
+#         'HOST': config('DB_HOST', default=False),
+#         'PORT': config('DB_PORT', default=False),
+#     }
+# }
 
 
 # Password validation
