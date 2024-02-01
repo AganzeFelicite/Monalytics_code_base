@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.hashers import check_password
 
 
 """
@@ -25,7 +26,8 @@ class Company(models.Model):
         verbose_name_plural = "Companies"
 
     def authenticate(self, password):
-        if password == self.password:
+        is_password_correct = check_password(password, self.password)
+        if is_password_correct:
             self.logged_in = True
             return self
         return None

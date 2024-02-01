@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
+from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
@@ -36,8 +37,9 @@ class CompanyListApiView(APIView):
             'company_name': request.data.get('company_name'),
             'email': request.data.get('email'),
             'sector': request.data.get('sector'),
-            'password': request.data.get('password')
+            'password': make_password(request.data.get('password'))
         }
+        
         serializer = CompanySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -54,6 +56,7 @@ class LoginView(APIView):
             company = Company.objects.get(email=email)
         except Company.DoesNotExist:
             company = None
+        
 
         if company and company.authenticate(password):
             # Login successful
