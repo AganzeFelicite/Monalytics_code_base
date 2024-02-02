@@ -41,7 +41,7 @@ class CompanyListApiView(APIView):
         }
         list_of_companies = Company.objects.all()
         if list_of_companies.filter(email=data['email']).exists():
-            return Response({'message': 'Company already exists'}, status=400)
+            return Response({'message': 'Company already exists with that email'}, status=400)
 
         serializer = CompanySerializer(data=data)
 
