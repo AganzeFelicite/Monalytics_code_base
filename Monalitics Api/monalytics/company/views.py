@@ -39,8 +39,12 @@ class CompanyListApiView(APIView):
             'sector': request.data.get('sector'),
             'password': make_password(request.data.get('password'))
         }
-        
+        list_of_companies = Company.objects.all()
+        if data.email in list_of_companies:
+            return Response({'message': 'Company already exists'}, status=400)
+
         serializer = CompanySerializer(data=data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -56,7 +60,6 @@ class LoginView(APIView):
             company = Company.objects.get(email=email)
         except Company.DoesNotExist:
             company = None
-        
 
         if company and company.authenticate(password):
             # Login successful
