@@ -76,28 +76,28 @@ WSGI_APPLICATION = 'monalytics.wsgi.application'
 # }
 
 
-# Database URL
-DATABASE_URL = config('DATABASE_URL', default=False)
+# # Database URL
+# DATABASE_URL = config('DB_URL', default=False)
 
-# Parse database configuration from $DATABASE_URL
-db_from_env = dj_database_url.config(default=DATABASE_URL)
+# # Parse database configuration from $DATABASE_URL
+# db_from_env = dj_database_url.config(default=DATABASE_URL)
 
-# # Update database settings
-DATABASES = {
-    'default': db_from_env
-}
-
-
+# # # Update database settings
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('POSTGRES_DATABASE'),
-#         'USER': os.environ.get('POSTGRES_USER'),
-#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-#         'HOST': os.environ.get('POSTGRES_HOST'),
-#         'PORT': os.environ.get('DB_PORT'),
-#     }
+#     'default': db_from_env
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DATABASE'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
