@@ -1,2 +1,5 @@
+from rest_framework.response import Response
+
+
 def home():
-    return "Welcome to Monalytics!"
+    return Response({'message': 'welcome to monalytics!'})
