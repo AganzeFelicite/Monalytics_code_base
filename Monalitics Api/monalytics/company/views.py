@@ -40,7 +40,7 @@ class CompanyListApiView(APIView):
             'password': make_password(request.data.get('password'))
         }
         list_of_companies = Company.objects.all()
-        if data['email'] in list_of_companies:
+        if list_of_companies.filter(email=data['email']).exists():
             return Response({'message': 'Company already exists'}, status=400)
 
         serializer = CompanySerializer(data=data)
