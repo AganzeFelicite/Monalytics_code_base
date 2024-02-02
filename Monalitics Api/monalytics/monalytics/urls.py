@@ -2,17 +2,18 @@ from django.contrib import admin
 from django.urls import path, include
 from company import urls
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+
+from rest_framework.views import APIView
 
 
-@api_view(['GET'])
-def home(request):
-    data = {'message': 'Welcome to Monalytics!'}
-    return Response(data)
+class HomeView(APIView):
+    def get(self, request):
+        data = {'message': 'Welcome to Monalytics!'}
+        return Response(data)
 
 
 urlpatterns = [
-    path("", home),
+    path("", HomeView.as_view()),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('monalytics-api/', include(urls)),
