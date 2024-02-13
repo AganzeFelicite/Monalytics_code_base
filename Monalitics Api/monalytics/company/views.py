@@ -1,11 +1,13 @@
+from django.shortcuts import get_object_or_404
+from rest_framework import generics
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Company
-from .serializers import CompanySerializer
+from .models import Company, SocialMediaAccount, Competitor
+from .serializers import CompanySerializer, SocialMediaAccountSerializer
 
 
 """
@@ -37,6 +39,8 @@ class CompanyListApiView(APIView):
             'company_name': request.data.get('company_name'),
             'email': request.data.get('email'),
             'sector': request.data.get('sector'),
+            'country': request.data.get('country'),
+            'city': request.data.get('city'),
             'password': make_password(request.data.get('password'))
         }
         list_of_companies = Company.objects.all()
@@ -70,3 +74,114 @@ class LoginView(APIView):
         else:
             # Invalid credentials
             return Response({'message': 'Invalid credentials'}, status=401)
+
+
+class CompanyUpdateApiView(APIView):
+    """
+    This is a class that defines a company update API view.
+    """
+
+    def put(self, request, pk, *args, **kwargs):
+        """
+        Update a company via PUT method.
+        """
+        company = get_object_or_404(Company, pk=pk)
+
+        data = {
+            'company_name': request.data.get('company_name'),
+            'email': request.data.get('email'),
+            'sector': request.data.get('sector'),
+            'country': request.data.get('country'),
+            'city': request.data.get('city'),
+        }
+
+        serializer = CompanySerializer(
+            instance=company, data=data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SocialMediaAccountApiView(APIView):
+    """
+    This is a class that defines a social media account API view.
+    """
+    # add permission to check if user is authenticated
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, company_id, *args, **kwargs):
+        """
+        Add a social media account to a company.
+        """
+
+        company = get_object_or_404(Company, pk=company_id)
+        if company.social_media_accounts.filter(account_link=request.data.get('account_link')).exists():
+            return Response({'message': 'Social media account already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        company.addSocialMediaAccount(
+            account_link=request.data.get('account_link'),
+            social_media_type=request.data.get('social_media_type')
+        )
+
+        return Response({'message': 'Social media account added successfully'}, status=status.HTTP_201_CREATED)
+
+    def get(self, request, company_id, *args, **kwargs):
+        """
+        Get all social media accounts.
+        """
+        socials = SocialMediaAccount.objects.filter(company=company_id)
+        serializer = SocialMediaAccountSerializer(socials, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, social_id, *args, **kwargs):
+        """
+        Delete a social media account.
+        """
+        social = SocialMediaAccount.objects.get(
+            pk=social_id)
+        social.delete()
+        return Response({'message': 'Social media account deleted successfully'}, status=status.HTTP_200_OK)
+
+
+class CompetitorApiView(APIView):
+    """
+    This is a class that defines a competitor API view.
+    """
+    # add permission to check if user is authenticated
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, company_id, *args, **kwargs):
+        """
+        Add a competitor to a company.
+        """
+
+        company = get_object_or_404(Company, pk=company_id)
+        if company.competitors.filter(competitor_name=request.data.get('competitor_name')).exists():
+            return Response({'message': 'Competitor already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        company.addCompetitor(
+            competitor_name=request.data.get('competitor_name'),
+            competitor_info=request.data.get('competitor_info')
+        )
+
+        return Response({'message': 'Competitor added successfully'}, status=status.HTTP_201_CREATED)
+
+    def get(self, request, company_id, *args, **kwargs):
+        """
+        Get all competitors.
+        """
+        competitors = Competitor.objects.filter(company=company_id)
+        serializer = CompetitorSerializer(competitors, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, competitor_id, *args, **kwargs):
+        """
+        Delete a competitor.
+        """
+        competitor = Competitor.objects.get(
+            pk=competitor_id)
+        competitor.delete()
+        return Response({'message': 'Competitor deleted successfully'}, status=status.HTTP_200_OK)
