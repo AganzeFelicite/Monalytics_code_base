@@ -59,7 +59,7 @@ class Company(models.Model):
     def addSocialMediaAccount(self, account_link, social_media_type):
         account = SocialMediaAccount.objects.create(
             account_link=account_link, social_media_type=social_media_type, company=self)
-        self.social_media_accounts.append(account)
+        # self.social_media_accounts.append(account)
         return account
 
     def deleteSocialMediaAccount(self, account):
