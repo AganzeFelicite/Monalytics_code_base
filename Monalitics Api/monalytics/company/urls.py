@@ -8,6 +8,7 @@ from .views import (
     CompetitorApiView
 )
 
+
 urlpatterns = [
     path('api/v1/company/add', CompanyListApiView.as_view()),
     path('api/v1/company/login', LoginView.as_view(), name='login'),
