@@ -5,6 +5,7 @@ from .views import (
     LoginView,
     CompanyUpdateApiView,
     SocialMediaAccountApiView,
+    CompetitorApiView
 )
 
 urlpatterns = [
@@ -16,5 +17,9 @@ urlpatterns = [
          SocialMediaAccountApiView.as_view(), name='add-social-media'),
     path('api/v1/companies/social-media/delete/<int:social_id>/',
          SocialMediaAccountApiView.as_view(), name='social-media'),
+    path('api/v1/companies/competitor/add/<int:company_id>/',
+         CompetitorApiView.as_view(), name='get-competitor'),
+    path('api/v1/companies/competitor/add/',
+         CompetitorApiView.as_view(), name='add-competitor'),
 
 ]

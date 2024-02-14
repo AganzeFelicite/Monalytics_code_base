@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from .models import Company, SocialMediaAccount, Competitor
-from .serializers import CompanySerializer, SocialMediaAccountSerializer
-
-
+from .serializers import (
+    CompanySerializer, SocialMediaAccountSerializer,
+    CompetitorSerializer)
 """
 these are views for the company app
 """
@@ -27,7 +27,9 @@ class CompanyListApiView(APIView):
         """
         to get all companies
         """
-        return Response({'message': 'Hello, world!'})
+        companies = Company.objects.all()
+        serializer = CompanySerializer(companies, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
 
@@ -121,12 +123,14 @@ class SocialMediaAccountApiView(APIView):
         if company.social_media_accounts.filter(account_link=request.data.get('account_link')).exists():
             return Response({'message': 'Social media account already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        company.addSocialMediaAccount(
+        account = company.addSocialMediaAccount(
             account_link=request.data.get('account_link'),
             social_media_type=request.data.get('social_media_type')
         )
+        created_account = SocialMediaAccountSerializer(account)
 
-        return Response({'message': 'Social media account added successfully'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Social media account added successfully', 'account': created_account.data,
+                         }, status=status.HTTP_201_CREATED)
 
     def get(self, request, company_id, *args, **kwargs):
         """
@@ -150,32 +154,30 @@ class CompetitorApiView(APIView):
     """
     This is a class that defines a competitor API view.
     """
-    # add permission to check if user is authenticated
-    # permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, company_id, *args, **kwargs):
+    def get(self, request, *args, company_id, **kwargs):
+        """
+        get all competitors of a company
+        """
+        competitors = Competitor.objects.filter(
+            company=company_id).values('competitor_name', 'competitor_info', 'id', 'company')
+        return Response(competitors, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
         """
         Add a competitor to a company.
         """
 
-        company = get_object_or_404(Company, pk=company_id)
+        company = get_object_or_404(Company, pk=request.data.get('company_id'))
         if company.competitors.filter(competitor_name=request.data.get('competitor_name')).exists():
             return Response({'message': 'Competitor already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        company.addCompetitor(
+        competitor = company.addCompetitor(
             competitor_name=request.data.get('competitor_name'),
             competitor_info=request.data.get('competitor_info')
         )
-
-        return Response({'message': 'Competitor added successfully'}, status=status.HTTP_201_CREATED)
-
-    def get(self, request, company_id, *args, **kwargs):
-        """
-        Get all competitors.
-        """
-        competitors = Competitor.objects.filter(company=company_id)
-        serializer = CompetitorSerializer(competitors, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        add_competitor = CompetitorSerializer(competitor)
+        return Response({'message': 'Competitor added successfully', 'competitor': add_competitor.data}, status=status.HTTP_201_CREATED)
 
     def delete(self, request, competitor_id, *args, **kwargs):
         """

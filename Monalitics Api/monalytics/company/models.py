@@ -10,6 +10,8 @@ note that some fields will be added later
 
 
 class SocialMediaAccount(models.Model):
+    social_media_image = models.ImageField(
+        upload_to='social_media', null=True, default='null')
     account_link = models.CharField(max_length=230)
     social_media_type = models.CharField(max_length=230)
     company = models.ForeignKey(
@@ -27,6 +29,8 @@ class Competitor(models.Model):
     this class defines a competitor
     '''
     competitor_name = models.CharField(max_length=230)
+    competitor_image = models.ImageField(
+        upload_to='competitors', null=True, default='null')
     company = models.ForeignKey(
         'Company', on_delete=models.CASCADE, related_name='competitors')
     competitor_info = models.CharField(max_length=230)
@@ -36,6 +40,8 @@ class Company(models.Model):
     """
     this class defines a company
     """
+    company_image = models.ImageField(
+        upload_to='companies', null=True, default='null')
     company_name = models.CharField(max_length=230)
     email = models.CharField(max_length=230)
     sector = models.CharField(max_length=230)

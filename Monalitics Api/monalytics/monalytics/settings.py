@@ -2,6 +2,7 @@
 import dj_database_url
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,27 +90,27 @@ WSGI_APPLICATION = 'monalytics.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('POSTGRES_DATABASE'),
-#         'USER': os.environ.get('POSTGRES_USER'),
-#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-#         'HOST': os.environ.get('POSTGRES_HOST'),
-#         'PORT': os.environ.get('DB_PORT'),
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  config('DB_NAME'),
-        'USER':  config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST':  config('DB_HOST'),
-        'PORT':  config('DB_PORT'),
+        'NAME': os.environ.get('POSTGRES_DATABASE'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':  config('DB_NAME'),
+#         'USER':  config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST':  config('DB_HOST'),
+#         'PORT':  config('DB_PORT'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

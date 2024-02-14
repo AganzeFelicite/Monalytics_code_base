@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, SocialMediaAccount
+from .models import Company, SocialMediaAccount, Competitor
 
 """
  serializers here, for the apis jsons
@@ -21,4 +21,13 @@ class SocialMediaAccountSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = SocialMediaAccount
+        fields = '__all__'
+
+
+class CompetitorSerializer(serializers.ModelSerializer):
+    """
+    this is a class that defines a competitor serializer
+    """
+    class Meta:
+        model = Competitor
         fields = '__all__'
