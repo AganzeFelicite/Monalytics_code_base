@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.response import Response, status
-from models import Influencer
-from serializers import InfluencerSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Influencer
+from .serializers import InfluencerSerializer
 
 # Create your views here.
 
 
-class InfleuncerApiView(APIView):
+class InfluencerListApiView(APIView):
     """
     this is a class that defines a influencer view
     """
