@@ -10,10 +10,10 @@ class Influencer(models.Model):
     sector = models.CharField(max_length=100)
     social_media = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    last_login = models.DateTimeField(auto_now=True)
-    last_login_ip = models.GenericIPAddressField()
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    last_login = models.DateTimeField(auto_now=True, blank=True, null=True)
+    login_status = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return self.full_name
@@ -28,3 +28,6 @@ class Influencer(models.Model):
         account = SocialMediaAccount.objects.create(
             account_link=account_link, social_media_type=social_media_type, influencer=self)
         return account
+
+    def deleteSocialMediaAccount(self, account):
+        account.delete()
