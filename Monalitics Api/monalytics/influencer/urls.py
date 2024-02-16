@@ -12,8 +12,8 @@ urlpatterns = [
          InfluencerListApiView.as_view(), name='add-influencer'),
     path('api/v1/influencer/get',
          InfluencerListApiView.as_view(), name='get-influencer'),
-    path('api/v1/influencer/update',
+    path('api/v1/influencer/update/<int:pk>',
          InfluencerListApiView.as_view(), name='update-influencer'),
-    path('api/v1/influencer/delete',
+    path('api/v1/influencer/delete/<int:pk>',
          InfluencerListApiView.as_view(), name='delete-influencer')
 ]
