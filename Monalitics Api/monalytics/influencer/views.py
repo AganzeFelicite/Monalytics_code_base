@@ -13,7 +13,7 @@ class InfluencerListApiView(APIView):
     this is a class that defines a influencer view
     """
 
-    def signup(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """
         create a influencer via post method
         """
