@@ -63,7 +63,10 @@ class InfluencerListApiView(APIView):
         influencer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def login(self, request, *args, **kwargs):
+
+class InfluencerApiAuthorization(APIView):
+
+    def post(self, request, *args, **kwargs):  # login
         email = request.data.get('email')
         password = request.data.get('password')
         try:
@@ -81,14 +84,14 @@ class InfluencerListApiView(APIView):
             # Invalid credentials
             return Response({'message': 'Invalid credentials'}, status=401)
 
-    def update_login_status(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):  # logout
         influencer = Influencer.objects.get(id=request.data.get('id'))
-        influencer.logged_in = request.data.get('logged_in')
+        influencer.logged_in = False
         influencer.save()
         return Response(status=status.HTTP_200_OK)
 
-    def logout(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):  # update login status
         influencer = Influencer.objects.get(id=request.data.get('id'))
-        influencer.logged_in = False
+        influencer.logged_in = request.data.get('logged_in')
         influencer.save()
         return Response(status=status.HTTP_200_OK)
