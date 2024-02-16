@@ -1,13 +1,15 @@
 from django.urls import path, include
 from .views import (
-    InfluencerListApiView
+    InfluencerListApiView,
+    InfluencerApiAuthorization
 )
 
 
 urlpatterns = [
-    path('api/v1/influencer/login', InfluencerListApiView.as_view(), name='login'),
+    path('api/v1/influencer/login',
+         InfluencerApiAuthorization.as_view(), name='login'),
     path('api/v1/influencer/logout',
-         InfluencerListApiView.as_view(), name='logout'),
+         InfluencerApiAuthorization.as_view(), name='logout'),
     path('api/v1/influencer/signup',
          InfluencerListApiView.as_view(), name='add-influencer'),
     path('api/v1/influencer/get',
