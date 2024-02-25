@@ -5,6 +5,7 @@ from decouple import config
 import os
 import dotenv
 
+
 # Load environment variables from .env file
 dotenv.load_dotenv()
 
@@ -211,7 +212,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middlewareAuthenticationMiddleware',
-    'corsheaders.middleware.CorsPostCsrfMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
