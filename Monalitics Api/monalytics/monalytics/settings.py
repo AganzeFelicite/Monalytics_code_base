@@ -1,5 +1,5 @@
 
-import dj_database_url
+# import dj_database_url
 from pathlib import Path
 from decouple import config
 import os
@@ -24,7 +24,7 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 CORS_ALLOWED_ORIGINS = [
-    '*',  # Add the allowed origins here
+    'http://localhost:3000',  # Add the allowed origins here
 ]
 ALLOWED_HOSTS = ['*']
 
