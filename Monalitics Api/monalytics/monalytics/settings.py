@@ -26,7 +26,7 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Add the allowed origins here
 ]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://localhost:3000']
 
 
 # Application definition
