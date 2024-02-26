@@ -43,9 +43,10 @@ class CompaignListApiView(generics.ListCreateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get_remaining_days(self, id):
+    def get_remaining_days(self, request, pk):
         """
-        get the remaining days for a campaign
+        Get remaining days for campaign 
         """
-        campaign = Campaign.objects.get(id=id)
-        return Response({'remaining_days': campaign.get_time_left_in_days}, status=status.HTTP_200_OK)
+        campaign = Campaign.objects.get(id=pk)
+        days_left = campaign.get_time_left_in_days()
+        return Response({'remaining_days': days_left})

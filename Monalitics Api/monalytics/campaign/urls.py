@@ -5,6 +5,6 @@ from .views import (
 
 urlpatterns = [
     path('api/v1/compaign/', CompaignListApiView.as_view(), name='add-campaign'),
-    path('api/v1/compaign/<int:id>/get_remaining_days/',
+    path('api/v1/compaign/<int:id>/remaining_days/',
          CompaignListApiView.as_view(), name='update-campaign'),
 ]
