@@ -1,4 +1,3 @@
-
 # import dj_database_url
 from pathlib import Path
 from decouple import config
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'company',
     'influencer',
+    'campaign',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,7 +72,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/

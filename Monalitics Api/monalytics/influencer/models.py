@@ -1,5 +1,6 @@
 from django.db import models
 from company.models import SocialMediaAccount
+from campaign.models import Campaign
 
 # Create your models here.
 
@@ -14,6 +15,8 @@ class Influencer(models.Model):
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     last_login = models.DateTimeField(auto_now=True, blank=True, null=True)
     login_status = models.BooleanField(default=False, blank=True, null=True)
+    compaigns = models.ManyToManyField(
+        'campaign.Campaign', related_name='influencers', blank=True, null=True)
 
     def __str__(self):
         return self.full_name
@@ -31,3 +34,8 @@ class Influencer(models.Model):
 
     def deleteSocialMediaAccount(self, account):
         account.delete()
+
+    def join_campaign(self, campaign):
+        self.campaigns.add(campaign)
+        self.save()
+        return self
