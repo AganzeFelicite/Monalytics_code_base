@@ -14,8 +14,8 @@ class CompaignListApiView(generics.ListCreateAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
     # # 1. List all
-    # queryset = Campaign.objects.all()
-    # serializer_class = CampaignSerializer
+    queryset = Campaign.objects.all()
+    serializer_class = CampaignSerializer
 
     # 2. Create
     def post(self, request, *args, **kwargs):
