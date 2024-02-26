@@ -1,5 +1,6 @@
 from datetime import timezone
 from django.db import models
+import datetime
 
 
 class Campaign(models.Model):
@@ -22,4 +23,7 @@ class Campaign(models.Model):
         return self.created_at + timezone.timedelta(days=self.time_limit) - timezone.now()
 
     def get_time_left_in_days(self):
-        return self.get_time_left().days
+        today = datetime.date.today()
+        days_left = self.created_at + \
+            timezone.timedelta(days=self.time_limit) - today
+        return days_left
