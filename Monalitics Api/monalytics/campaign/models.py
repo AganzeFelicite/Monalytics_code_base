@@ -24,7 +24,10 @@ class Campaign(models.Model):
 
     def get_time_left_in_days(self):
         today = datetime.date.today()
-        days_left = self.created_at + \
-            timezone.timedelta(days=self.time_limit) - today
 
-        return days_left
+        end_datetime = self.created_at + \
+            datetime.timedelta(days=self.time_limit)
+        end_date = end_datetime.date()
+
+        diff = end_date - today
+        return diff.days
