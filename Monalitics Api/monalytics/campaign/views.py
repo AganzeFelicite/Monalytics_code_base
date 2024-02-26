@@ -13,9 +13,9 @@ class CompaignListApiView(generics.ListCreateAPIView):
     # add permission to check if user is authenticated
     # permission_classes = [permissions.IsAuthenticated]
 
-    # 1. List all
-    queryset = Campaign.objects.all()
-    serializer_class = CampaignSerializer
+    # # 1. List all
+    # queryset = Campaign.objects.all()
+    # serializer_class = CampaignSerializer
 
     # 2. Create
     def post(self, request, *args, **kwargs):
