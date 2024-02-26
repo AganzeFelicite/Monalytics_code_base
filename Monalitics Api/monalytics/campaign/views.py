@@ -31,6 +31,10 @@ class CompaignListApiView(generics.ListCreateAPIView):
             # 'influencer': request.data.get('influencer')
         }
 
+        list_of_compaigns = Campaign.objects.all()
+        if list_of_compaigns.filter(title=data['title']).exists():
+            return Response({'message': 'Campaign already exists with that title'}, status=400)
+
         serializer = CampaignSerializer(data=data)
 
         if serializer.is_valid():
@@ -38,3 +42,10 @@ class CompaignListApiView(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_remaining_days(self, id):
+        """
+        get the remaining days for a campaign
+        """
+        campaign = Campaign.objects.get(id=id)
+        return Response({'remaining_days': campaign.get_time_left_in_days}, status=status.HTTP_200_OK)
