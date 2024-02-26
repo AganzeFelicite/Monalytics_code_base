@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Campaign(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     hash_tag = models.CharField(max_length=100)
     time_limit = models.IntegerField()
