@@ -28,6 +28,14 @@ class CompaignListApiView(generics.ListCreateAPIView):
             'time_limit': request.data.get('time_limit'),
             'image_link': request.data.get('image_link'),
             'description': request.data.get('description'),
+            'tiktok': request.data.get('tiktok'),
+            'instagram': request.data.get('instagram'),
+            'facebook': request.data.get('facebook'),
+            'twitter': request.data.get('twitter'),
+            'youtube': request.data.get('youtube'),
+            'linkedin': request.data.get('linkedin'),
+            'snapchat': request.data.get('snapchat'),
+
             # 'influencer': request.data.get('influencer')
         }
 
