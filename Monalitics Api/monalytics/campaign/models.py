@@ -35,6 +35,5 @@ class Campaign(models.Model):
         end_datetime = self.created_at + \
             datetime.timedelta(days=self.time_limit)
         end_date = end_datetime.date()
-
         diff = end_date - today
         return diff.days
