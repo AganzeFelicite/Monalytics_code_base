@@ -10,6 +10,13 @@ class Campaign(models.Model):
     time_limit = models.IntegerField()
     image_link = models.URLField()
     description = models.TextField()
+    tiktok = models.BooleanField(default=False)
+    instagram = models.BooleanField(default=False)
+    facebook = models.BooleanField(default=False)
+    twitter = models.BooleanField(default=False)
+    youtube = models.BooleanField(default=False)
+    linkedin = models.BooleanField(default=False)
+    snapchat = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

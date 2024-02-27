@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Influencer
 from .serializers import InfluencerSerializer
-
+from campaign.models import Campaign
 # Create your views here.
 
 
@@ -94,4 +94,19 @@ class InfluencerApiAuthorization(APIView):
         influencer = Influencer.objects.get(id=request.data.get('id'))
         influencer.logged_in = request.data.get('logged_in')
         influencer.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class InfluencerJoinCampaign(APIView):
+
+    def get(self, request, *args, **kwargs):
+        influencers = Influencer.objects.all()
+        serializer = InfluencerSerializer(influencers, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        influencer = Influencer.objects.get(
+            id=request.data.get('influencer_id'))
+        campaign = Campaign.objects.get(id=request.data.get('campaign_id'))
+        influencer.join_campaign(campaign)
         return Response(status=status.HTTP_200_OK)

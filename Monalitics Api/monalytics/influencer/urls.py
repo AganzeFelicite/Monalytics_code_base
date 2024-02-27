@@ -1,7 +1,8 @@
 from django.urls import path, include
 from .views import (
     InfluencerListApiView,
-    InfluencerApiAuthorization
+    InfluencerApiAuthorization,
+    InfluencerJoinCampaign
 )
 
 
@@ -17,5 +18,7 @@ urlpatterns = [
     path('api/v1/influencer/update/<int:pk>',
          InfluencerListApiView.as_view(), name='update-influencer'),
     path('api/v1/influencer/delete/<int:pk>',
-         InfluencerListApiView.as_view(), name='delete-influencer')
+         InfluencerListApiView.as_view(), name='delete-influencer'),
+    path('api/v1/influencer/join_campaign/',
+         InfluencerJoinCampaign.as_view(), name='join-campaign')
 ]
