@@ -101,7 +101,7 @@ class InfluencerApiAuthorization(APIView):
 class InfluencerJoinCampaign(APIView):
 
     def get(self, request, *args, **kwargs):
-        influencers = Influencer.objects.all()
+        influencers = Influencer.objects.filter(id=1)
         serializer = InfluencerSerializer(influencers, many=True)
         for influencer in serializer.data:
             for campaign in influencer['compaigns']:
