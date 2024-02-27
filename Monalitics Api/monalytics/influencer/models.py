@@ -36,6 +36,14 @@ class Influencer(models.Model):
         account.delete()
 
     def join_campaign(self, campaign):
-        self.campaigns.add(campaign)
+        self.compaigns.add(campaign)
         self.save()
         return self
+
+    def leave_campaign(self, campaign):
+        self.compaigns.remove(campaign)
+        self.save()
+        return self
+
+    def get_campaigns(self):
+        return self.compaigns.all()
